@@ -1,0 +1,4 @@
+-- to rebuib the base apk
+cd android
+./gradlew assembleDebug
+
