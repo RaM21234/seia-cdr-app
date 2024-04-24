@@ -1,9 +1,16 @@
 import React from 'react';
-import {View, Text, StyleSheet, TouchableOpacity} from 'react-native';
+import {
+  View,
+  Text,
+  StyleSheet,
+  TouchableOpacity,
+  TextInput,
+} from 'react-native';
 import {useNavigation} from '@react-navigation/native';
 import {StackNavigationProp} from '@react-navigation/stack';
 import {RootStackParamList} from '../../App';
 import {removeToken, getToken} from '../utils/storage';
+import MaterialIcons from 'react-native-vector-icons/MaterialIcons';
 
 type ProfileScreenNavigationProp = StackNavigationProp<
   RootStackParamList,
@@ -30,17 +37,81 @@ const Profile: React.FC = () => {
   };
 
   return (
-    <View style={styles.container}>
-      <Text style={styles.text}>User Profile Screen</Text>
-      <TouchableOpacity
-        className="my-10"
-        style={styles.button}
-        onPress={handleGetToken}>
-        <Text style={styles.text}>Get Token</Text>
-      </TouchableOpacity>
-      <TouchableOpacity style={styles.button} onPress={handleRemoveToken}>
-        <Text style={styles.text}>Log Out</Text>
-      </TouchableOpacity>
+    <View className="bg-white h-full">
+      <View className="p-4">
+        <Text className="text-lg text-black text-center">Settings</Text>
+      </View>
+      <View className="mx-5">
+        <TouchableOpacity className="p-3 border-b border-gray-300 flex flex-row">
+          <View className="mt-1 mr-3">
+            <MaterialIcons name={'person'} size={20} color={'black'} />
+          </View>
+
+          <Text className="text-lg text-black">Account</Text>
+          <View className="mt-1 ml-auto">
+            <MaterialIcons name={'chevron-right'} size={20} color={'black'} />
+          </View>
+        </TouchableOpacity>
+        <TouchableOpacity className="p-3 border-b border-gray-300 flex flex-row">
+          <View className="mt-1 mr-3">
+            <MaterialIcons name={'person'} size={20} color={'black'} />
+          </View>
+          <Text className="text-lg text-black">Notifications</Text>
+          <View className="mt-1 ml-auto">
+            <MaterialIcons name={'chevron-right'} size={20} color={'black'} />
+          </View>
+        </TouchableOpacity>
+
+        <TouchableOpacity className="p-3 border-b border-gray-300 flex flex-row">
+          <View className="mt-1 mr-3">
+            <MaterialIcons name={'person'} size={20} color={'black'} />
+          </View>
+          <Text className="text-lg text-black">Appearance</Text>
+          <View className="mt-1 ml-auto">
+            <MaterialIcons name={'chevron-right'} size={20} color={'black'} />
+          </View>
+        </TouchableOpacity>
+        <TouchableOpacity className="p-3 border-b border-gray-300 flex flex-row">
+          <View className="mt-1 mr-3">
+            <MaterialIcons name={'person'} size={20} color={'black'} />
+          </View>
+          <Text className="text-lg text-black">Privacy & Security</Text>
+          <View className="mt-1 ml-auto">
+            <MaterialIcons name={'chevron-right'} size={20} color={'black'} />
+          </View>
+        </TouchableOpacity>
+        <TouchableOpacity className="p-3 border-b border-gray-300 flex flex-row">
+          <View className="mt-1 mr-3">
+            <MaterialIcons name={'person'} size={20} color={'black'} />
+          </View>
+          <Text className="text-lg text-black">Help and Support</Text>
+          <View className="mt-1 ml-auto">
+            <MaterialIcons name={'chevron-right'} size={20} color={'black'} />
+          </View>
+        </TouchableOpacity>
+        <TouchableOpacity className="p-3 flex flex-row border-b border-gray-300">
+          <View className="mt-1 mr-3">
+            <MaterialIcons name={'person'} size={20} color={'black'} />
+          </View>
+          <Text className="text-lg text-black" onPress={handleGetToken}>
+            Get Token
+          </Text>
+          <View className="mt-1 ml-auto">
+            <MaterialIcons name={'chevron-right'} size={20} color={'black'} />
+          </View>
+        </TouchableOpacity>
+        <TouchableOpacity className="p-3 border-gray-300 border-b  flex flex-row">
+          <View className="mt-1 mr-3">
+            <MaterialIcons name={'logout'} size={20} color={'black'} />
+          </View>
+          <Text className="text-lg text-black" onPress={handleRemoveToken}>
+            Logout
+          </Text>
+          <View className="mt-1 ml-auto">
+            <MaterialIcons name={'chevron-right'} size={20} color={'black'} />
+          </View>
+        </TouchableOpacity>
+      </View>
     </View>
   );
 };

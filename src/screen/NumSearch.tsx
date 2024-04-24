@@ -15,11 +15,66 @@ import {Formik, FormikHelpers} from 'formik';
 import * as Yup from 'yup';
 import styles from '../styles/styles';
 import {getToken} from '../utils/storage';
+import {Alert} from 'react-native';
 
 interface PhoneNumberSearchProps {}
 
 interface FormValues {
   phoneNumber: string;
+}
+
+interface PhoneDetails {
+  e164Format: string;
+  numberType: string;
+  nationalFormat: string;
+  dialingCode: number;
+  countryCode: string;
+  carrier: string;
+  type: string;
+}
+
+interface AddressDetails {
+  address: string;
+  city: string;
+  countryCode: string;
+  timeZone: string;
+  type: string;
+}
+
+interface InternetAddress {
+  id: string;
+  service: string;
+  caption: string;
+  type: string;
+}
+
+interface ApiResponseData {
+  image: string;
+  id: string;
+  name: string;
+  imId: string;
+  gender: string;
+  score: number;
+  access: string;
+  enhanced: boolean;
+  phones: PhoneDetails[];
+  addresses: AddressDetails[];
+  internetAddresses: InternetAddress[];
+  badges: string[];
+  tags: any[];
+  sources: any[];
+  searchWarnings: any[];
+  commentsStats: {
+    showComments: boolean;
+  };
+  manualCallerIdPrompt: boolean;
+}
+
+interface ApiResponse {
+  success: boolean;
+  status: number;
+  data: ApiResponseData;
+  message: string;
 }
 
 const validationSchema = Yup.object({
@@ -29,25 +84,25 @@ const validationSchema = Yup.object({
     .required('Phone number is required'),
 });
 
-const NumSearch: React.FC<PhoneNumberSearchProps> = props => {
-  const [searchResult, setsearchResult] = useState<any>(null);
+const NumSearch: React.FC = () => {
+  const [searchResult, setSearchResult] = useState<ApiResponseData | null>(
+    null,
+  );
 
   const handleSubmit = async (
     values: FormValues,
     formikHelpers: FormikHelpers<FormValues>,
   ) => {
-    try {
-      formikHelpers.setSubmitting(true);
-      console.log('Phone Number:', values.phoneNumber.slice(-10));
-      const token = await getToken();
-      // Check if token is not null and is a string; otherwise, handle the case (e.g., show an error or redirect to login)
-      if (typeof token !== 'string') {
-        console.error('Authentication token is missing or invalid.');
-        // You might want to add some error handling logic here, such as showing an error message or redirecting to a login screen.
-        formikHelpers.setSubmitting(false);
-        return;
-      }
+    formikHelpers.setSubmitting(true);
 
+    const token = await getToken();
+    if (typeof token !== 'string' || !token.trim()) {
+      Alert.alert('Error', 'Authentication token is missing or invalid.');
+      formikHelpers.setSubmitting(false);
+      return;
+    }
+
+    try {
       const apiResponse = await fetch(
         `https://development.seiasecure.com/api/v1/user/number_info`,
         {
@@ -60,15 +115,16 @@ const NumSearch: React.FC<PhoneNumberSearchProps> = props => {
         },
       );
 
-      const data = await apiResponse.json();
+      const data: ApiResponse = await apiResponse.json(); // Using the ApiResponse type for response
       if (!apiResponse.ok) {
-        throw new Error(data.message || 'Something went wrong');
+        throw new Error(data.message || 'Unable to fetch details');
       }
 
-      console.log('Search successful:', data?.data);
-      setsearchResult(data?.data);
-    } catch (error) {
+      console.log('Search successful:', data.data);
+      setSearchResult(data.data);
+    } catch (error: any) {
       console.error('Search failed:', error);
+      Alert.alert('Error', error.message || 'An unexpected error occurred');
     } finally {
       formikHelpers.setSubmitting(false);
     }
@@ -89,7 +145,7 @@ const NumSearch: React.FC<PhoneNumberSearchProps> = props => {
         isSubmitting,
       }) => (
         <View style={styles.container}>
-          <View className="border border-white py-10 px-10 rounded-xl">
+          <View className=" px-10 rounded-xl">
             <Text style={styles.heading} className="mb-10">
               {' '}
               Number Search
@@ -160,48 +216,55 @@ const NumSearch: React.FC<PhoneNumberSearchProps> = props => {
                         <Text className="text-gray-300 text-sm">
                           Mobile No.:{' '}
                           <Text className="font-bold text-base">
-                            {searchResult?.phones?.[0]?.e164Format}
+                            {searchResult.phones[0].e164Format}
+                          </Text>
+                        </Text>
+                        <Text className="text-gray-300 text-sm">
+                          Gender:{' '}
+                          <Text className="font-bold text-base">
+                            {searchResult.gender}
                           </Text>
                         </Text>
                         <Text className="text-gray-300 text-sm">
                           Company:{' '}
                           <Text className="font-bold text-base">
-                            {searchResult?.phones?.[0]?.carrier}
+                            {searchResult.phones[0].carrier}
                           </Text>
                         </Text>
                         <Text className="text-gray-300 text-sm">
                           Number Type:{' '}
                           <Text className="font-bold text-base">
-                            {searchResult?.phones?.[0]?.numberType || 'N/A'}
+                            {searchResult?.phones[0]?.numberType || 'N/A'}
                           </Text>
                         </Text>
                         <Text className="text-gray-300 text-sm">
                           Country Code:{' '}
                           <Text className="font-bold text-base">
-                            {searchResult?.addresses?.[0]?.countryCode || 'N/A'}
+                            {searchResult.phones[0].countryCode}
                           </Text>
                         </Text>
                       </View>
                       <View className="border border-gray-600 w-[90%] mx-auto my-2" />
+
                       {/* address */}
                       <Text>Address</Text>
                       <View className="flex flex-col items-start ml-10    justify-center p-2 w-full">
                         <Text className="text-gray-300 text-sm">
                           City:{' '}
                           <Text className="font-bold text-base">
-                            {searchResult?.addresses?.[0]?.city}
+                            {searchResult.addresses[0].city}
                           </Text>
                         </Text>
                         <Text className="text-gray-300 text-sm">
                           Country:{' '}
                           <Text className="font-bold text-base">
-                            {searchResult?.addresses?.[0]?.countryCode}
+                            {searchResult.phones[0].countryCode}
                           </Text>
                         </Text>
                         <Text className="text-gray-300 text-sm">
                           Time Zone:{' '}
                           <Text className="font-bold text-base">
-                            {searchResult?.addresses?.[0]?.timeZone}
+                            {searchResult.addresses[0].timeZone}
                           </Text>
                         </Text>
                         <Text className="text-gray-300 text-sm">
@@ -210,6 +273,31 @@ const NumSearch: React.FC<PhoneNumberSearchProps> = props => {
                             {searchResult?.access}
                           </Text>
                         </Text>
+                      </View>
+
+                      <View className="border border-gray-600 w-[90%] mx-auto my-2" />
+
+                      {/*Internet address */}
+                      <Text>Internet Address</Text>
+                      <View className="flex flex-col items-start ml-10    justify-center p-2 w-full">
+                        {searchResult.internetAddresses.map(
+                          (internetAddress, index) => (
+                            <View key={index}>
+                              <Text className="text-gray-300 text-sm">
+                                Service Type:{' '}
+                                <Text className="font-bold text-base">
+                                  {internetAddress.service}
+                                </Text>
+                              </Text>
+                              <Text className="text-gray-300 text-sm">
+                                Email :{' '}
+                                <Text className="font-bold text-base">
+                                  {internetAddress.id}
+                                </Text>
+                              </Text>
+                            </View>
+                          ),
+                        )}
                       </View>
                     </View>
                   </View>

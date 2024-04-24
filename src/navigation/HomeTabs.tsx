@@ -6,10 +6,11 @@ import VehicleSearch from '../screen/VehicleSearch';
 import MaterialIcons from 'react-native-vector-icons/MaterialIcons';
 import Profile from '../screen/Profile';
 import Dashboard from '../screen/Dashboard';
+import FeatureList from './FeatureList';
 
 type RootTabParamList = {
-  NumSearch: undefined;
-  VehicleSearch: undefined;
+  FeatureList: undefined;
+
   Profile: undefined;
   Dashboard: undefined;
 };
@@ -25,24 +26,22 @@ const HomeTabs = () => {
         tabBarStyle: {height: 60, backgroundColor: '#0E46A3'},
         tabBarIcon: ({focused, color, size}) => {
           let iconName = 'manage-search';
-          if (route.name === 'NumSearch') {
-            iconName = 'manage-search';
-          } else if (route.name === 'VehicleSearch') {
-            iconName = 'directions-car';
+          if (route.name === 'FeatureList') {
+            iconName = 'featured-play-list';
           } else if (route.name === 'Profile') {
-            iconName = 'account-circle';
+            iconName = 'settings';
           } else if (route.name === 'Dashboard') {
             iconName = 'analytics';
           }
-          const iconColor = focused ? '#FFFFFF' : '#C5FF95';
+          const iconColor = focused ? '#C5FF95' : '#FFFFFF';
           return (
             <MaterialIcons name={iconName} size={size} color={iconColor} />
           );
         },
       })}>
       <Tab.Screen name="Dashboard" component={Dashboard} />
-      <Tab.Screen name="NumSearch" component={NumSearch} />
-      <Tab.Screen name="VehicleSearch" component={VehicleSearch} />
+      <Tab.Screen name="FeatureList" component={FeatureList} />
+
       <Tab.Screen name="Profile" component={Profile} />
     </Tab.Navigator>
   );
