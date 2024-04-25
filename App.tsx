@@ -20,14 +20,14 @@ const App: React.FC = () => {
           headerShown: false,
         }}>
         <Stack.Screen
-          name="HomeTabs"
-          component={HomeTabs}
-          // options={{title: 'Home Tabs'}}
-        />
-        <Stack.Screen
           name="Login"
           component={MyForm}
           // options={{title: 'Login'}}
+        />
+        <Stack.Screen
+          name="HomeTabs"
+          component={HomeTabs}
+          // options={{title: 'Home Tabs'}}
         />
       </Stack.Navigator>
     </NavigationContainer>
