@@ -4,10 +4,12 @@ import {createStackNavigator} from '@react-navigation/stack';
 import {SafeAreaView, StyleSheet} from 'react-native';
 import MyForm from './src/screen/LoginForm';
 import HomeTabs from './src/navigation/HomeTabs';
+import SplashScreen from './src/screen/SplashScreen';
 
 export type RootStackParamList = {
   Login: undefined; // Assuming no parameters are needed for navigation to the Login screen
   HomeTabs: undefined;
+  Splash: undefined;
 };
 
 const Stack = createStackNavigator<RootStackParamList>();
@@ -18,17 +20,11 @@ const App: React.FC = () => {
       <Stack.Navigator
         screenOptions={{
           headerShown: false,
-        }}>
-        <Stack.Screen
-          name="Login"
-          component={MyForm}
-          // options={{title: 'Login'}}
-        />
-        <Stack.Screen
-          name="HomeTabs"
-          component={HomeTabs}
-          // options={{title: 'Home Tabs'}}
-        />
+        }}
+        initialRouteName="Splash">
+        <Stack.Screen name="Splash" component={SplashScreen} />
+        <Stack.Screen name="Login" component={MyForm} />
+        <Stack.Screen name="HomeTabs" component={HomeTabs} />
       </Stack.Navigator>
     </NavigationContainer>
   );
