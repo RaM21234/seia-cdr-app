@@ -4,7 +4,7 @@ import {View, Text, StyleSheet} from 'react-native';
 
 const Dashboard: React.FC = () => {
   return (
-    <View style={styles.container}>
+    <View className=" " style={styles.container}>
       <Text className="text-white">User Dashboard!</Text>
     </View>
   );

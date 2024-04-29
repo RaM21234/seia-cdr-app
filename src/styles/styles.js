@@ -18,7 +18,6 @@ const styles = StyleSheet.create({
   },
 
   container: {
-    borderWidth: 1, // Width of the border
     borderColor: 'black', // Color of the border
     flex: 1,
     justifyContent: 'center', // Align items vertically at the center of the screen

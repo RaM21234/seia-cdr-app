@@ -375,45 +375,46 @@ const NumSearch: React.FC = () => {
                         <Text style={styles.buttonText}>Upi Search</Text>
                       </TouchableOpacity>
                     </View>
+                    {upiResult && (
+                      <View className="w-full flex flex-col items-center justify-center">
+                        <View className="border border-gray-600 w-[90%] mx-auto my-2" />
+                        <Text className="p-2  ">UPI Details</Text>
 
-                    <View className="w-full flex flex-col items-center justify-center">
-                      <View className="border border-gray-600 w-[90%] mx-auto my-2" />
-                      <Text className="p-2  ">UPI Details</Text>
-
-                      {upiResult?.data?.data.upiDetailsList.map(
-                        (upiDetail, index) => (
-                          <View
-                            key={index}
-                            className="flex flex-col items-start ml-10 justify-center p-2 w-full">
-                            <Text className="text-gray-300 text-sm">
-                              UPI ID:{' '}
-                              <Text className="font-bold text-base">
-                                {upiDetail.upiId}
+                        {upiResult?.data?.data.upiDetailsList.map(
+                          (upiDetail, index) => (
+                            <View
+                              key={index}
+                              className="flex flex-col items-start ml-10 justify-center p-2 w-full">
+                              <Text className="text-gray-300 text-sm">
+                                UPI ID:{' '}
+                                <Text className="font-bold text-base">
+                                  {upiDetail.upiId}
+                                </Text>
                               </Text>
-                            </Text>
-                            <Text className="text-gray-300 text-sm">
-                              Name:{' '}
-                              <Text className="font-bold text-base">
-                                {upiDetail.name}
+                              <Text className="text-gray-300 text-sm">
+                                Name:{' '}
+                                <Text className="font-bold text-base">
+                                  {upiDetail.name}
+                                </Text>
                               </Text>
-                            </Text>
-                            <Text className="text-gray-300 text-sm">
-                              Payment Service Provider (PSP):{' '}
-                              <Text className="font-bold text-base">
-                                {upiDetail.pspName}
+                              <Text className="text-gray-300 text-sm">
+                                Payment Service Provider (PSP):{' '}
+                                <Text className="font-bold text-base">
+                                  {upiDetail.pspName}
+                                </Text>
                               </Text>
-                            </Text>
-                            <Text className="text-gray-300 text-sm">
-                              Bank IFSC Code:{' '}
-                              <Text className="font-bold text-base">
-                                {upiDetail.bankIfsc}
+                              <Text className="text-gray-300 text-sm">
+                                Bank IFSC Code:{' '}
+                                <Text className="font-bold text-base">
+                                  {upiDetail.bankIfsc}
+                                </Text>
                               </Text>
-                            </Text>
-                          </View>
-                        ),
-                      )}
-                      <View className="border border-gray-600 w-[90%] mx-auto mt-2 mb-5" />
-                    </View>
+                            </View>
+                          ),
+                        )}
+                        <View className="border border-gray-600 w-[90%] mx-auto mt-2 mb-5" />
+                      </View>
+                    )}
                   </View>
                 </View>
               </View>

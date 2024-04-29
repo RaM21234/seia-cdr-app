@@ -32,7 +32,7 @@ const FeatureList: React.FC = () => {
   return (
     <View className="flex-1 bg-[#161633] ">
       <TouchableOpacity
-        className="bg-white text-black shadow-xl py-4 px-4 mt-4  rounded-2xl"
+        className="bg-white text-black shadow-xl py-4 px-4 mt-4  rounded-2xl "
         onPress={() => setDropdownOpen(!dropdownOpen)}>
         <View className=" flex flex-row ">
           <Text className="text-black   mr-auto">

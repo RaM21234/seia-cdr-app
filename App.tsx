@@ -23,9 +23,9 @@ const App: React.FC = () => {
         }}
         // initialRouteName="Splash"
       >
-        <Stack.Screen name="Splash" component={SplashScreen} />
-        <Stack.Screen name="Login" component={MyForm} />
+        {/* <Stack.Screen name="Splash" component={SplashScreen} /> */}
         <Stack.Screen name="HomeTabs" component={HomeTabs} />
+        <Stack.Screen name="Login" component={MyForm} />
       </Stack.Navigator>
     </NavigationContainer>
   );
