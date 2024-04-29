@@ -89,13 +89,13 @@ const Profile: React.FC = () => {
             <MaterialIcons name={'chevron-right'} size={20} color={'black'} />
           </View>
         </TouchableOpacity>
-        <TouchableOpacity className="p-3 flex flex-row border-b border-gray-300">
+        <TouchableOpacity
+          className="p-3 flex flex-row border-b border-gray-300"
+          onPress={handleGetToken}>
           <View className="mt-1 mr-3">
             <MaterialIcons name={'person'} size={20} color={'black'} />
           </View>
-          <Text className="text-lg text-black" onPress={handleGetToken}>
-            Get Token
-          </Text>
+          <Text className="text-lg text-black">Get Token</Text>
           <View className="mt-1 ml-auto">
             <MaterialIcons name={'chevron-right'} size={20} color={'black'} />
           </View>

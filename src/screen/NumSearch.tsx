@@ -84,10 +84,45 @@ const validationSchema = Yup.object({
     .required('Phone number is required'),
 });
 
+// Interface for the main API response
+interface ApiResponseUpi {
+  success: boolean;
+  status: number;
+  message: string;
+  data: UpiSearchData;
+}
+
+// Interface for the data field in the main response
+interface UpiSearchData {
+  _id: string;
+  mobile_number: string;
+  data: UpiDetailsData;
+  createdAt: string;
+  updatedAt: string;
+  __v: number;
+}
+
+// Interface for the data within the data field of UpiSearchData
+interface UpiDetailsData {
+  upiDetailsList: UpiDetails[];
+}
+
+// Interface for individual UPI details entries
+interface UpiDetails {
+  upiId: string;
+  name: string;
+  pspName: string;
+  code: string;
+  payeeType: string;
+  bankIfsc: string;
+}
+
 const NumSearch: React.FC = () => {
   const [searchResult, setSearchResult] = useState<ApiResponseData | null>(
     null,
   );
+  const [phone, setphone] = useState<string>('');
+  const [upiResult, setupiResult] = useState<ApiResponseUpi | null>(null);
 
   const handleSubmit = async (
     values: FormValues,
@@ -103,6 +138,7 @@ const NumSearch: React.FC = () => {
     }
 
     try {
+      setphone(values.phoneNumber);
       const apiResponse = await fetch(
         `https://development.seiasecure.com/api/v1/user/number_info`,
         {
@@ -127,6 +163,39 @@ const NumSearch: React.FC = () => {
       Alert.alert('Error', error.message || 'An unexpected error occurred');
     } finally {
       formikHelpers.setSubmitting(false);
+    }
+  };
+
+  const handleUpiSearch = async () => {
+    console.log('upi search clicked', phone);
+    const token = await getToken();
+    if (typeof token !== 'string' || !token.trim()) {
+      Alert.alert('Error', 'Authentication token is missing or invalid.');
+      return;
+    }
+    try {
+      const apiResponse = await fetch(
+        `https://development.seiasecure.com/api/v1/user/upi_details`,
+        {
+          method: 'POST',
+          headers: {
+            'Content-Type': 'application/json',
+            'x-auth-token': token,
+          },
+          body: JSON.stringify({phone: phone}),
+        },
+      );
+
+      const data: ApiResponseUpi = await apiResponse.json(); // Using the ApiResponse type for response
+      if (!apiResponse.ok) {
+        throw new Error(data.message || 'Unable to fetch details');
+      }
+      setupiResult(data);
+      console.log('Search successful:', data);
+    } catch (error: any) {
+      console.error('Search failed:', error);
+      Alert.alert('Error', error.message || 'An unexpected error occurred');
+    } finally {
     }
   };
 
@@ -299,6 +368,51 @@ const NumSearch: React.FC = () => {
                           ),
                         )}
                       </View>
+                      <TouchableOpacity
+                        className="py-2 my-4 px-10 "
+                        onPress={() => handleUpiSearch()}
+                        style={styles.buttonContainer}>
+                        <Text style={styles.buttonText}>Upi Search</Text>
+                      </TouchableOpacity>
+                    </View>
+
+                    <View className="w-full flex flex-col items-center justify-center">
+                      <View className="border border-gray-600 w-[90%] mx-auto my-2" />
+                      <Text className="p-2  ">UPI Details</Text>
+
+                      {upiResult?.data?.data.upiDetailsList.map(
+                        (upiDetail, index) => (
+                          <View
+                            key={index}
+                            className="flex flex-col items-start ml-10 justify-center p-2 w-full">
+                            <Text className="text-gray-300 text-sm">
+                              UPI ID:{' '}
+                              <Text className="font-bold text-base">
+                                {upiDetail.upiId}
+                              </Text>
+                            </Text>
+                            <Text className="text-gray-300 text-sm">
+                              Name:{' '}
+                              <Text className="font-bold text-base">
+                                {upiDetail.name}
+                              </Text>
+                            </Text>
+                            <Text className="text-gray-300 text-sm">
+                              Payment Service Provider (PSP):{' '}
+                              <Text className="font-bold text-base">
+                                {upiDetail.pspName}
+                              </Text>
+                            </Text>
+                            <Text className="text-gray-300 text-sm">
+                              Bank IFSC Code:{' '}
+                              <Text className="font-bold text-base">
+                                {upiDetail.bankIfsc}
+                              </Text>
+                            </Text>
+                          </View>
+                        ),
+                      )}
+                      <View className="border border-gray-600 w-[90%] mx-auto mt-2 mb-5" />
                     </View>
                   </View>
                 </View>

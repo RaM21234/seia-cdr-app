@@ -21,7 +21,8 @@ const App: React.FC = () => {
         screenOptions={{
           headerShown: false,
         }}
-        initialRouteName="Splash">
+        // initialRouteName="Splash"
+      >
         <Stack.Screen name="Splash" component={SplashScreen} />
         <Stack.Screen name="Login" component={MyForm} />
         <Stack.Screen name="HomeTabs" component={HomeTabs} />
