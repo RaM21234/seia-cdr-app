@@ -125,12 +125,13 @@ const VehicleSearch: React.FC = () => {
       }) => (
         <View style={styles.container}>
           <View className=" px-10 rounded-xl">
-            <Text style={styles.heading} className="mb-10">
-              {' '}
+            <Text className=" text-center text-4xl text-black font-extrabold">
               Vehicle Search
             </Text>
             <View className="mt-7">
-              <Text style={styles.inputtag}>Vehicle Number</Text>
+              <Text className="text-black mb-2 text-base p-3">
+                Vehicle Number
+              </Text>
               <TextInput
                 style={styles.input}
                 onChangeText={handleChange('vehicleNumber')}
@@ -154,92 +155,94 @@ const VehicleSearch: React.FC = () => {
           </View>
 
           {searchResult && (
-            <ScrollView className="mx-auto mt-5 border-2 border-blue-400 w-full rounded-lg">
+            <ScrollView className="mx-auto mt-5 border-2 border-[#08b3ad] w-full rounded-lg">
               <View className="bg-[rgba(0,88,191,0.15)] shadow-[2px_2px_6px_rgba(0,0,0,0.15)] border-[3px_solid_rgba(0,88,191,1)] rounded-xl max-w-[650px]">
                 <View className="bg-[rgba(0,88,191,0.15)] shadow-[2px_2px_6px_rgba(0,0,0,0.15)]">
                   <View className="flex flex-col items-start text-white p-3 pt-2 w-[90%] mx-auto">
-                    <Text className="p-2 text-3xl text-white">
+                    <Text className="p-2 text-3xl text-black mx-auto">
                       Vehicle Details
                     </Text>
 
-                    <View className="border border-gray-600 w-[90%] mx-auto my-2" />
+                    <View className="border border-[#08b3ad] w-[90%] mx-auto my-2" />
                     <View className="my-2">
-                      <Text className="mx-auto mb-2">Info</Text>
-                      <Text className="text-gray-300 text-sm">
+                      <Text className="mx-auto mb-2 text-black">Info</Text>
+                      <Text className="text-sm text-black">
                         Owner:{' '}
-                        <Text className="font-bold text-base">
+                        <Text className="font-bold text-base text-black">
                           {searchResult.rc_owner_name}
                         </Text>
                       </Text>
-                      <Text className="text-gray-300 text-sm">
+                      <Text className="text-black text-sm">
                         Address:{' '}
-                        <Text className="font-bold text-base">
+                        <Text className="font-bold text-base text-black">
                           {searchResult.rc_permanent_address}
                         </Text>
                       </Text>
                     </View>
 
-                    <View className="border border-gray-600 w-[90%] mx-auto my-2" />
+                    <View className="border border-[#08b3ad] w-[90%] mx-auto my-2 " />
                     <View className="my-2">
-                      <Text className="mx-auto mb-2">Vehicle Details</Text>
+                      <Text className="mx-auto mb-2 text-black">
+                        Vehicle Details
+                      </Text>
 
-                      <Text className="text-gray-300 text-sm">
+                      <Text className="text-black text-sm">
                         Registration Number:{' '}
                         <Text className="font-bold text-base">
                           {searchResult.rc_regn_no}
                         </Text>
                       </Text>
-                      <Text className="text-gray-300 text-sm">
+                      <Text className="text-black text-sm">
                         Chassis Number:{' '}
                         <Text className="font-bold text-base">
                           {searchResult.rc_chasi_no}
                         </Text>
                       </Text>
-                      <Text className="text-gray-300 text-sm">
+                      <Text className="text-black text-sm">
                         Engine Number:{' '}
                         <Text className="font-bold text-base">
                           {searchResult.rc_eng_no}
                         </Text>
                       </Text>
-                      <Text className="text-gray-300 text-sm">
+                      <Text className="text-black text-sm">
                         Vehicle Type:{' '}
                         <Text className="font-bold text-base">
                           {searchResult.rc_vh_class_desc}
                         </Text>
                       </Text>
-                      <Text className="text-gray-300 text-sm">
+                      <Text className="text-black text-sm">
                         Manufacturer:{' '}
                         <Text className="font-bold text-base">
                           {searchResult.rc_maker_desc}
                         </Text>
                       </Text>
-                      <Text className="text-gray-300 text-sm">
+                      <Text className="text-black text-sm">
                         Model:{' '}
                         <Text className="font-bold text-base">
                           {searchResult.rc_maker_model}
                         </Text>
                       </Text>
-                      <Text className="text-gray-300 text-sm">
+                      <Text className="text-black text-sm">
                         Manufacturing Date:{' '}
                         <Text className="font-bold text-base">
                           {searchResult.rc_manu_month_yr}
                         </Text>
                       </Text>
 
-                      <Text className="text-gray-300 text-sm">
+                      <Text className="text-black text-sm">
                         Insurance Company:{' '}
                         <Text className="font-bold text-base">
                           {searchResult.rc_insurance_comp}
                         </Text>
                       </Text>
-                      <Text className="text-gray-300 text-sm">
+                      <Text className="text-black text-sm">
                         Insurance Valid Upto:{' '}
                         <Text className="font-bold text-base">
                           {searchResult.rc_insurance_upto}
                         </Text>
                       </Text>
                     </View>
-                    <View className="border border-gray-600 w-[90%] mx-auto my-2" />
+                    <View className="border border-[#08b3ad] w-[90%] mx-auto my-2" />
                   </View>
                 </View>
               </View>

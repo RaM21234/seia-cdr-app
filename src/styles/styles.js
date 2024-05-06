@@ -22,7 +22,8 @@ const styles = StyleSheet.create({
     flex: 1,
     justifyContent: 'center', // Align items vertically at the center of the screen
     padding: 20,
-    backgroundColor: '#161633', // Deep blue background color
+    backgroundColor: 'white', // Deep blue background color
+    marginBottom: 150,
   },
 
   input: {
@@ -50,7 +51,7 @@ const styles = StyleSheet.create({
   },
   buttonContainer: {
     elevation: 2, // Slight shadow for Android
-    backgroundColor: '#0075ff', // A pleasant green background for the button
+    backgroundColor: '#08b3ad', // A pleasant green background for the button
     borderRadius: 20,
     paddingVertical: 10,
     paddingHorizontal: 12,

@@ -30,9 +30,9 @@ const FeatureList: React.FC = () => {
   };
 
   return (
-    <View className="flex-1 bg-[#161633] ">
+    <View className="flex-1 bg-white ">
       <TouchableOpacity
-        className="bg-white text-black shadow-xl py-4 px-4 mt-4  rounded-2xl "
+        className="bg-white text-black border border-gray-300   py-4 px-4 mt-4  rounded-2xl mx-2"
         onPress={() => setDropdownOpen(!dropdownOpen)}>
         <View className=" flex flex-row ">
           <Text className="text-black   mr-auto">
@@ -46,21 +46,29 @@ const FeatureList: React.FC = () => {
         </View>
       </TouchableOpacity>
       {dropdownOpen && (
-        <View className="absolute border-t-0 bg-white mt-20 border-b border-gray-300 rounded-md w-full z-10 p-3">
-          {formTypesArray.map((item, index) => (
-            <TouchableOpacity
-              key={index}
-              className="px-2 hover:bg-blue-100"
-              onPress={() => {
-                setCurrentFormIndex(index);
-                setDropdownOpen(false);
-              }}>
-              <Text className="text-center text-gray-700 my-2">
-                {item.label}
-              </Text>
-              <View className="border-t-0 border-b border-gray-300 w-[100%] mx-auto my-1" />
-            </TouchableOpacity>
-          ))}
+        <View
+          className="absolute  bg-white  border-t-0 border-b   border-gray-300 rounded-b-lg w-[94%] left-3 z-10  "
+          style={{marginTop: 73}}>
+          {formTypesArray.map((item, index) => {
+            return (
+              <TouchableOpacity
+                key={index}
+                className="px-2 hover:bg-blue-100"
+                onPress={() => {
+                  setCurrentFormIndex(index);
+                  setDropdownOpen(false);
+                }}>
+                <Text className="text-center text-gray-700 my-2">
+                  {item.label}
+                </Text>
+                <View
+                  className={`border-t-0 border-b ${
+                    index == formTypesArray.length - 1 ? 'border-b-0' : ''
+                  } border-gray-300 w-[100%] mx-auto my-1`}
+                />
+              </TouchableOpacity>
+            );
+          })}
         </View>
       )}
       <View className="flex-1 w-full mt-0">{renderForm()}</View>
